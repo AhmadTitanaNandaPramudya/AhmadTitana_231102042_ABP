@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> CAHAYA RAMADAN 1447H </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital@1&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    
+    <style>
+        body { font-family: 'Poppins', sans-serif; background-color: #f0f2f5; scroll-behavior: smooth; }
+        .arabic-font { font-family: 'Amiri', serif; }
+        .hero-section {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1542332213-31f87348057f?q=80&w=2070') center/cover;
+            height: 50vh; display: flex; align-items: center; text-align: center; color: white;
+        }
+        .countdown-box { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 15px; padding: 15px; }
+        .card-custom { border: none; border-radius: 20px; transition: 0.3s; }
+        .table-imsakiyah thead { background-color: #198754; color: white; }
+        
+        .btn-thr-new {
+            background: linear-gradient(45deg, #198754, #28a745);
+            border: none;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(25, 135, 84, 0.3);
+            white-space: nowrap;
+        }
+        .btn-thr-new:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(25, 135, 84, 0.4);
+            background: linear-gradient(45deg, #157347, #198754);
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#"><i class="bi bi-moon-stars-fill me-2 text-warning"></i>CAHAYA RAMADAN</a>
+            <div class="ms-auto text-white">
+                <span id="realtime-clock" class="badge bg-outline-light border d-none d-md-inline">00:00:00</span>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero-section text-white text-center">
+        <div class="container">
+            <h1 id="dynamic-greeting" class="display-4 fw-bold mb-2">Marhaban Ya Ramadan</h1>
+            <p id="dynamic-subtext" class="fs-5 arabic-font text-warning mb-4">"Semoga Allah menerima amal ibadah kita semua"</p>
+            
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="countdown-box shadow-sm">
+                        <p class="small text-uppercase mb-2 tracking-wider">Menuju Lebaran 2026:</p>
+                        <div class="d-flex justify-content-center gap-3 fw-bold fs-3 text-white">
+                            <div><span id="days">00</span><div class="small fw-light" style="font-size: 0.7rem;">HARI</div></div>
+                            <div>:</div>
+                            <div><span id="hours">00</span><div class="small fw-light" style="font-size: 0.7rem;">JAM</div></div>
+                            <div>:</div>
+                            <div><span id="minutes">00</span><div class="small fw-light" style="font-size: 0.7rem;">MENIT</div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container my-5">
+        <div class="row g-4">
+            <div class="col-lg-8">
+                <div class="card card-custom shadow-sm mb-4">
+                    <div class="card-body p-4">
+                        <h5 class="fw-bold mb-4 text-center text-md-start"><i class="bi bi-calendar-check text-success me-2"></i>Jadwal Sholat Hari Ini</h5>
+                        <div class="table-responsive">
+                            <table class="table table-hover table-imsakiyah align-middle text-center">
+                                <thead>
+                                    <tr>
+                                        <th>Imsak</th><th>Subuh</th><th>Dzuhur</th><th>Ashar</th><th>Maghrib</th><th>Isya</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="fw-semibold">
+                                    <tr>
+                                        <td>04:45</td><td>04:55</td><td>12:15</td><td>15:20</td><td class="text-danger">18:18</td><td>19:28</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card card-custom shadow-sm border-0">
+                    <div class="card-body p-4 p-md-5">
+                        <div class="row align-items-center">
+                            <div class="col-md-8 text-center text-md-start mb-4 mb-md-0">
+                                <h4 class="fw-bold text-dark mb-3">
+                                    <i class="bi bi-stars text-warning me-2"></i>Kejutan Berkah Ramadan
+                                </h4>
+                                <p class="text-muted mb-0 lh-lg">
+                                    "Tangan di atas lebih baik daripada tangan di bawah. Semoga keberkahan Ramadan ini membawa kebahagiaan bagi Anda dan keluarga melalui THR spesial ini."
+                                </p>
+                            </div>
+                            <div class="col-md-4 text-center text-md-end">
+                                <button class="btn btn-success btn-thr-new fw-bold py-3 px-5 rounded-pill shadow-sm" data-bs-toggle="modal" data-bs-target="#modalTHR">
+                                    <i class="bi bi-gift-fill me-2"></i>Klaim THR
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="card card-custom shadow-sm">
+                    <div class="card-body p-4">
+                        <h5 class="fw-bold mb-3 text-primary"><i class="bi bi-list-check me-2"></i>Amalan Harian</h5>
+                        <hr>
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="c1">
+                            <label class="form-check-label fw-medium" for="c1">Sholat 5 Waktu Berjamaah</label>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="c2">
+                            <label class="form-check-label fw-medium" for="c2">Tilawah Al-Qur'an (1 Juz)</label>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="c3">
+                            <label class="form-check-label fw-medium" for="c3">Sedekah Harian</label>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="c4">
+                            <label class="form-check-label fw-medium" for="c4">Dzikir Pagi & Malam</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-dark text-white py-4 text-center mt-5">
+        <p class="mb-0 small text-secondary">&copy; Ramadan 2026 <i class="bi bi-heart-fill text-danger mx-1"></i></p>
+    </footer>
+
+    <div class="modal fade" id="modalTHR" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg overflow-hidden text-center">
+                <div id="thrInitialState">
+                    <div class="modal-header bg-warning text-dark border-0 py-4 justify-content-center">
+                        <h4 class="modal-title fw-bold"><i class="bi bi-stars me-2"></i>HADIAH UNTUK ANDA</h4>
+                    </div>
+                    <div class="modal-body py-5 px-4 text-dark">
+                        <i class="bi bi-cash-stack text-success display-1 mb-3"></i>
+                        <h2 class="fw-bold">Alhamdulillah!</h2>
+                        <div class="bg-light rounded-4 p-4 border border-warning border-2 border-opacity-25 shadow-sm mt-3">
+                            <p class="mb-1 text-muted text-uppercase fw-semibold small">Nominal THR Anda:</p>
+                            <h1 class="display-4 fw-bold text-success mb-2">Rp 1.500.000</h1>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-center border-0 pb-5 pt-0">
+                        <button type="button" class="btn btn-outline-secondary px-4 rounded-pill fw-bold" data-bs-dismiss="modal">Tutup</button>
+                        <button type="button" id="btnCairkan" class="btn btn-success px-5 rounded-pill fw-bold shadow">Cairkan Sekarang</button>
+                    </div>
+                </div>
+                <div id="thrSuccessState" class="d-none">
+                    <div class="modal-body py-5 text-dark">
+                        <div class="mb-4 text-success"><i class="bi bi-patch-check-fill" style="font-size: 5rem;"></i></div>
+                        <h2 class="fw-bold">Berhasil!</h2>
+                        <p class="text-muted">Dana telah dipindahkan ke tabungan Anda. Selamat Berlebaran!</p>
+                        <div class="spinner-border text-success mt-2" role="status"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+        setInterval(() => {
+            const now = new Date();
+            document.getElementById('realtime-clock').innerText = now.toLocaleTimeString('id-ID');
+            const h = now.getHours();
+            let g = "Marhaban Ya Ramadan";
+            if(h >= 3 && h < 5) g = "Selamat Sahur!";
+            else if(h >= 17 && h < 19) g = "Selamat Berbuka!";
+            document.getElementById('dynamic-greeting').innerText = g;
+        }, 1000);
+
+        const targetDate = new Date("March 20, 2026 00:00:00").getTime();
+        setInterval(() => {
+            const diff = targetDate - new Date().getTime();
+            document.getElementById("days").innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+            document.getElementById("hours").innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            document.getElementById("minutes").innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        }, 1000);
+
+        document.getElementById('btnCairkan').addEventListener('click', function() {
+            confetti({ particleCount: 200, spread: 80, origin: { y: 0.6 } });
+            this.disabled = true;
+            this.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Memproses...';
+            
+            setTimeout(() => {
+                document.getElementById('thrInitialState').classList.add('d-none');
+                document.getElementById('thrSuccessState').classList.remove('d-none');
+                setTimeout(() => {
+                    bootstrap.Modal.getInstance(document.getElementById('modalTHR')).hide();
+                    document.getElementById('thrInitialState').classList.remove('d-none');
+                    document.getElementById('thrSuccessState').classList.add('d-none');
+                    this.disabled = false;
+                    this.innerText = "Cairkan Sekarang";
+                }, 3000);
+            }, 1200);
+        });
+    </script>
+</body>
+</html>
