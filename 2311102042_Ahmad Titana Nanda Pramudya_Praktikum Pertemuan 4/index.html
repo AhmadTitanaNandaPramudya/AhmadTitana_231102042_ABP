@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>User Profile Fetcher</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #0f0c29;
+      font-family: 'Outfit', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2.5rem 1.25rem;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* background orbs */
+    body::before,
+    body::after {
+      content: '';
+      position: fixed;
+      border-radius: 50%;
+      pointer-events: none;
+      filter: blur(60px);
+      z-index: 0;
+    }
+    body::before {
+      width: 400px; height: 400px;
+      background: #6c3de0;
+      opacity: .28;
+      top: -100px; left: -100px;
+    }
+    body::after {
+      width: 340px; height: 340px;
+      background: #e040fb;
+      opacity: .2;
+      bottom: -80px; right: -60px;
+    }
+
+    .orb-cyan {
+      position: fixed;
+      width: 240px; height: 240px;
+      border-radius: 50%;
+      background: #00b4d8;
+      opacity: .14;
+      top: 45%; left: 62%;
+      filter: blur(55px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* shell */
+    .shell {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 520px;
+    }
+
+    /* header */
+    .header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .eyebrow {
+      font-size: 11px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: #a78bfa;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+    .title {
+      font-family: 'Playfair Display', serif;
+      font-size: 30px;
+      color: #fff;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 6px;
+    }
+    .subtitle {
+      font-size: 13px;
+      color: rgba(255,255,255,.4);
+      font-weight: 300;
+    }
+
+    /* glass card wrapper */
+    .glass-card {
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 20px;
+      padding: 1.75rem;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+
+    /* button */
+    #tombol {
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #7c3aed, #a855f7);
+      color: #fff;
+      font-family: 'Outfit', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: .04em;
+      cursor: pointer;
+      transition: opacity .2s, transform .1s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      position: relative;
+      overflow: hidden;
+    }
+    #tombol::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,.1);
+      opacity: 0;
+      transition: opacity .2s;
+    }
+    #tombol:hover::after { opacity: 1; }
+    #tombol:active { transform: scale(.98); }
+    #tombol:disabled { opacity: .5; cursor: not-allowed; }
+    #tombol svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+    .ring {
+      width: 16px; height: 16px;
+      border: 2px solid rgba(255,255,255,.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin .6s linear infinite;
+      flex-shrink: 0;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* hasil profil */
+    #hasil-profil { margin-top: 1.25rem; }
+
+    .profile-reveal {
+      opacity: 0;
+      transform: scale(.96) translateY(8px);
+      transition: opacity .5s ease, transform .5s ease;
+    }
+    .profile-reveal.show {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+
+    /* profile card top */
+    .p-top {
+      background: linear-gradient(135deg, rgba(124,58,237,.3), rgba(168,85,247,.15));
+      border: 1px solid rgba(167,139,250,.25);
+      border-radius: 16px 16px 0 0;
+      padding: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .ava {
+      width: 58px; height: 58px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #7c3aed, #ec4899);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      font-weight: 700;
+      color: #fff;
+      flex-shrink: 0;
+      border: 2px solid rgba(255,255,255,.2);
+    }
+    .p-name {
+      font-size: 20px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 5px;
+    }
+    .avail-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      color: #86efac;
+      font-weight: 500;
+      background: rgba(74,222,128,.12);
+      border: 1px solid rgba(74,222,128,.25);
+      border-radius: 20px;
+      padding: 3px 10px;
+    }
+    .avail-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: #4ade80;
+      animation: gpulse 2s infinite;
+    }
+    @keyframes gpulse {
+      0%,100% { opacity: 1; transform: scale(1); }
+      50%      { opacity: .5; transform: scale(.8); }
+    }
+
+    /* profile fields */
+    .p-fields {
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.1);
+      border-top: none;
+      border-radius: 0 0 16px 16px;
+      padding: 1.25rem 1.5rem;
+      display: grid;
+      gap: 14px;
+    }
+
+    .frow {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .ficon {
+      width: 34px; height: 34px;
+      border-radius: 9px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .ficon svg { width: 15px; height: 15px; }
+    .fi-purple { background: rgba(124,58,237,.25); color: #c4b5fd; }
+    .fi-pink   { background: rgba(236,72,153,.2);  color: #f9a8d4; }
+    .fi-cyan   { background: rgba(6,182,212,.2);   color: #67e8f9; }
+
+    .flabel {
+      font-size: 11px;
+      color: rgba(255,255,255,.35);
+      margin-bottom: 2px;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+    .fval {
+      font-size: 14px;
+      color: #fff;
+      font-weight: 500;
+    }
+
+
+  </style>
+</head>
+<body>
+
+  <div class="orb-cyan"></div>
+
+  <div class="shell">
+
+    <div class="header">
+      <div class="eyebrow">AJAX Demo</div>
+      <div class="title">User profile</div>
+    </div>
+
+    <div class="glass-card">
+
+      <button id="tombol">
+        <svg id="bico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M8 2v9M4 8l4 4 4-4" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M2 14h12" stroke-linecap="round"/>
+        </svg>
+        <span id="btxt">Tampilkan Profil</span>
+      </button>
+
+      <div id="hasil-profil"></div>
+
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('tombol').addEventListener('click', function () {
+      const btn  = document.getElementById('tombol');
+      const btxt = document.getElementById('btxt');
+      const bico = document.getElementById('bico');
+
+      btn.disabled = true;
+      btxt.textContent = 'Mengambil data...';
+      bico.outerHTML = '<div class="ring" id="bico"></div>';
+      document.getElementById('hasil-profil').innerHTML = '';
+
+      fetch('data.php')
+        .then(function (response) {
+          if (!response.ok) throw new Error('HTTP ' + response.status);
+          return response.json();
+        })
+        .then(function (data) {
+          render(data);
+        })
+        .catch(function (err) {
+          document.getElementById('hasil-profil').innerHTML =
+            '<p style="color:#f87171;font-size:13px;margin-top:1rem;">Gagal memuat data: ' + err.message + '</p>';
+        })
+        .finally(function () {
+          btn.disabled = false;
+          btxt.textContent = 'Refresh Data';
+          var r = document.getElementById('bico');
+          if (r) r.outerHTML =
+            '<svg id="bico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8">' +
+            '<path d="M13.5 2.5A6.5 6.5 0 1 1 6 2.7" stroke-linecap="round"/>' +
+            '<path d="M13.5 2.5V6h-3.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+        });
+    });
+
+    function render(d) {
+      var ini = d.nama.split(' ').map(function (w) { return w[0]; }).join('').slice(0, 2).toUpperCase();
+
+      document.getElementById('hasil-profil').innerHTML =
+        '<div class="profile-reveal" id="prev">' +
+          '<div class="p-top">' +
+            '<div class="ava">' + ini + '</div>' +
+            '<div>' +
+              '<div class="p-name">' + d.nama + '</div>' +
+              '<span class="avail-chip"><span class="avail-dot"></span>Available for work</span>' +
+            '</div>' +
+          '</div>' +
+          '<div class="p-fields">' +
+            '<div class="frow">' +
+              '<div class="ficon fi-purple">' +
+                '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">' +
+                '<circle cx="8" cy="5.5" r="2.5"/>' +
+                '<path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke-linecap="round"/></svg>' +
+              '</div>' +
+              '<div><div class="flabel">Nama</div><div class="fval">' + d.nama + '</div></div>' +
+            '</div>' +
+            '<div class="frow">' +
+              '<div class="ficon fi-pink">' +
+                '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">' +
+                '<rect x="2" y="4" width="12" height="9" rx="1.5"/>' +
+                '<path d="M5 4V3M11 4V3M2 7.5h12" stroke-linecap="round"/></svg>' +
+              '</div>' +
+              '<div><div class="flabel">Pekerjaan</div><div class="fval">' + d.pekerjaan + '</div></div>' +
+            '</div>' +
+            '<div class="frow">' +
+              '<div class="ficon fi-cyan">' +
+                '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">' +
+                '<path d="M8 2C5.8 2 4 3.8 4 6c0 3 4 8 4 8s4-5 4-8c0-2.2-1.8-4-4-4Z"/>' +
+                '<circle cx="8" cy="6" r="1.5"/></svg>' +
+              '</div>' +
+              '<div><div class="flabel">Lokasi</div><div class="fval">' + d.lokasi + '</div></div>' +
+            '</div>' +
+          '</div>' +
+        '</div>';
+
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          var p = document.getElementById('prev');
+          if (p) p.classList.add('show');
+        });
+      });
+    }
+  </script>
+
+</body>
+</html>
